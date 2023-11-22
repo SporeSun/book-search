@@ -63,6 +63,11 @@ const SavedBooks = () => {
       if (!response.ok) {
         throw new Error('something went wrong!');
       }
+
+      const updatedUser = await response.json();
+      setUserData(updatedUser);
+      // upon success, remove book's id from localStorage
+      removeBookId(bookId);
     } catch (err) {
       console.error(err);
     }
@@ -72,7 +77,7 @@ const SavedBooks = () => {
   if (loading) return <h2>LOADING...</h2>;
   if (error) return <p>Error :(</p>;
 
-  const userData = data?.me;
+  const userData = data?.me
 
   return (
     <>
