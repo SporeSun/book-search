@@ -4,10 +4,10 @@ const typeDefs = `
         username: String
         email: String
         password: String
-        bookCount: Integer
+        bookCount: Int
         savedBooks: [Book]!
     }
-    type Book: {
+    type Book {
         bookID: String!
         authors: [String]!
         description: String
@@ -15,11 +15,11 @@ const typeDefs = `
         image: String
         link: String
     }
-    type Auth: {
+    type Auth {
         token: ID!
         user: User
     }
-    type Query: {
+    type Query {
         me: User
     }
     input SaveBookInput {
@@ -33,8 +33,10 @@ const typeDefs = `
     type Mutation {
         addUser(username: String!, email: String!, password: String!): Auth
         login(email: String!, password: String!): Auth
-        saveBook(input: saveBookInput!): User
+        saveBook(input: SaveBookInput!): User
         removeBook(bookId: ID!): User
       }
 `
+module.exports = typeDefs;
+
     
