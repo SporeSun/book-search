@@ -6,7 +6,9 @@ import {
   Row,
   Col
 } from 'react-bootstrap';
-import { useMutation, useQuery } from '@apollo/client';
+import { useMutation } from '@apollo/client';
+
+// import { useQuery } from '@apollo/client'
 
 import { getMe, deleteBook } from '../utils/API';
 import Auth from '../utils/auth';
@@ -16,10 +18,25 @@ import { REMOVE_BOOK } from '../utils/mutations';
 
 const SavedBooks = () => {
   // const [userData, setUserData] = useState({});
-  const { data, loading, error } = useQuery(GET_ME);
+  // const { loading, data } = useQuery(GET_ME);
+  const mockData = {
+    me: {
+      username: "John_Doe",
+      email: "john@example.com",
+      id: "12345",
+      savedBooks: []
+    }
+  }
+  const data = mockData;
+  const error = null;
+  const loading = false;
+  console.log(data);
   const [removeBook] = useMutation(REMOVE_BOOK);
 
   // use this to determine if `useEffect()` hook needs to run again
+
+  const userData = data?.me || {};
+  console.log(userData);
   const userDataLength = Object.keys(userData).length;
 
   useEffect(() => {
@@ -37,10 +54,10 @@ const SavedBooks = () => {
           throw new Error('something went wrong!');
         }
 
-        const user = await response.json();
-        setUserData(user);
+        // const user = await response.json();
+        // setUserData(user);
       } catch (err) {
-        console.error(err);
+       console.error(err);
       }
     };
 
@@ -64,8 +81,8 @@ const SavedBooks = () => {
         throw new Error('something went wrong!');
       }
 
-      const updatedUser = await response.json();
-      setUserData(updatedUser);
+      // const updatedUser = await response.json();
+      // setUserData(updatedUser);
       // upon success, remove book's id from localStorage
       removeBookId(bookId);
     } catch (err) {
@@ -75,13 +92,12 @@ const SavedBooks = () => {
 
   // if data isn't here yet, say so
   if (loading) return <h2>LOADING...</h2>;
-  if (error) return <p>Error :(</p>;
+  // if (error) return <p>Error :(</p>;
 
-  const userData = data?.me
 
   return (
     <>
-      <div fluid className="text-light bg-dark p-5">
+      <div fluid="true" className="text-light bg-dark p-5">
         <Container>
           <h1>Viewing saved books!</h1>
         </Container>
